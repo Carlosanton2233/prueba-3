@@ -60,7 +60,9 @@
 
     .letter-card:focus-visible { outline: 3px solid #6577d8; outline-offset: 3px; }
     .letter { color: #6577d8; font-size: 38px; font-weight: 800; line-height: 1; }
-    .number { color: #a4a7b4; font-size: 10px; letter-spacing: 1px; }
+    .clue { display: flex; align-items: center; gap: 4px; }
+    .emoji { font-size: 16px; }
+    .word { color: #737991; font-size: 12px; font-weight: 700; }
     .letter-card:nth-child(4n + 2) .letter { color: #f17659; }
     .letter-card:nth-child(4n + 3) .letter { color: #45a98b; }
     .letter-card:nth-child(4n) .letter { color: #dfa638; }
@@ -91,13 +93,23 @@
   </main>
 
   <script>
-    const letters = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split("");
+    const entries = [
+      ["A", "abeja", "🐝"], ["B", "barco", "⛵"], ["C", "casa", "🏠"],
+      ["D", "dado", "🎲"], ["E", "estrella", "⭐"], ["F", "flor", "🌼"],
+      ["G", "gato", "🐱"], ["H", "helado", "🍦"], ["I", "isla", "🏝️"],
+      ["J", "jirafa", "🦒"], ["K", "koala", "🐨"], ["L", "luna", "🌙"],
+      ["M", "mariposa", "🦋"], ["N", "nube", "☁️"], ["Ñ", "ñandú", "🐦"],
+      ["O", "oso", "🐻"], ["P", "pelota", "⚽"], ["Q", "queso", "🧀"],
+      ["R", "rana", "🐸"], ["S", "sol", "☀️"], ["T", "tortuga", "🐢"],
+      ["U", "uvas", "🍇"], ["V", "volcán", "🌋"], ["W", "web", "🌐"],
+      ["X", "xilófono", "🎶"], ["Y", "yoyó", "🪀"], ["Z", "zorro", "🦊"]
+    ];
     const alphabet = document.querySelector("#alphabet");
 
-    alphabet.innerHTML = letters.map((letter, index) => `
-      <button class="letter-card" type="button" aria-label="Letra ${letter}">
+    alphabet.innerHTML = entries.map(([letter, word, emoji]) => `
+      <button class="letter-card" type="button" aria-label="${letter} de ${word}">
         <span class="letter">${letter}</span>
-        <span class="number">${String(index + 1).padStart(2, "0")}</span>
+        <span class="clue"><span class="emoji" aria-hidden="true">${emoji}</span><span class="word">${word}</span></span>
       </button>
     `).join("");
   </script>
