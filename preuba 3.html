@@ -38,6 +38,29 @@
     h1 span { color: #f17659; }
     .intro, .footer-note { color: #737991; font-size: 17px; }
     .alphabet { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; }
+    .search {
+      width: min(360px, 100%);
+      margin: 0 auto 24px;
+      padding: 13px 17px;
+      border: 1px solid #e2dfd7;
+      border-radius: 14px;
+      background: #fffefa;
+      color: #27304a;
+      font: inherit;
+      font-size: 15px;
+    }
+
+    .search:focus-visible { outline: 3px solid #6577d8; outline-offset: 3px; }
+    .empty-state { color: #737991; font-size: 15px; }
+    .empty-state[hidden] { display: none; }
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+    }
 
     .letter-card {
       display: grid;
@@ -87,7 +110,10 @@
       <p class="intro">Cada letra es el comienzo de una gran historia.</p>
     </header>
 
+    <label class="visually-hidden" for="search">Buscar una letra o una palabra</label>
+    <input class="search" id="search" type="search" placeholder="Buscar una letra o una palabra…">
     <section class="alphabet" aria-label="Alfabeto español" id="alphabet"></section>
+    <p class="empty-state" id="empty-state" role="status" hidden>No encontramos ninguna letra o palabra.</p>
 
     <p class="footer-note">¡Elige una letra y descubre su palabra!</p>
   </main>
@@ -105,13 +131,29 @@
       ["X", "xilófono", "🎶"], ["Y", "yoyó", "🪀"], ["Z", "zorro", "🦊"]
     ];
     const alphabet = document.querySelector("#alphabet");
+    const search = document.querySelector("#search");
+    const emptyState = document.querySelector("#empty-state");
 
     alphabet.innerHTML = entries.map(([letter, word, emoji]) => `
-      <button class="letter-card" type="button" aria-label="${letter} de ${word}">
+      <button class="letter-card" type="button" aria-label="${letter} de ${word}" data-letter="${letter}" data-word="${word}">
         <span class="letter">${letter}</span>
         <span class="clue"><span class="emoji" aria-hidden="true">${emoji}</span><span class="word">${word}</span></span>
       </button>
     `).join("");
+
+    search.addEventListener("input", () => {
+      const query = search.value.trim().toLocaleLowerCase("es");
+      let visibleCount = 0;
+
+      alphabet.querySelectorAll(".letter-card").forEach((card) => {
+        const matches = card.dataset.letter.toLocaleLowerCase("es").includes(query)
+          || card.dataset.word.toLocaleLowerCase("es").includes(query);
+        card.hidden = !matches;
+        if (matches) visibleCount += 1;
+      });
+
+      emptyState.hidden = visibleCount > 0;
+    });
   </script>
 </body>
 </html>
