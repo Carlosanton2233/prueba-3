@@ -5,6 +5,77 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f7f5ef">
   <title>Mi alfabeto</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      color: #27304a;
+      background: #f7f5ef;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      padding: 56px 24px 36px;
+      background:
+        radial-gradient(ellipse at 10% 12%, #ffe6cf 0, transparent 28%),
+        radial-gradient(ellipse at 90% 20%, #e1e9ff 0, transparent 26%),
+        #f7f5ef;
+    }
+
+    main {
+      width: min(900px, 100%);
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero { margin-bottom: 38px; }
+    .eyebrow { color: #79809a; font-size: 12px; font-weight: 800; letter-spacing: 3px; }
+    h1 { margin: 12px 0; font-size: clamp(42px, 8vw, 72px); letter-spacing: -3px; }
+    h1 span { color: #f17659; }
+    .intro, .footer-note { color: #737991; font-size: 17px; }
+    .alphabet { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; }
+
+    .letter-card {
+      display: grid;
+      min-height: 102px;
+      place-items: center;
+      align-content: center;
+      gap: 2px;
+      border: 1px solid #e9e6df;
+      border-radius: 20px;
+      background: #fffefa;
+      box-shadow: 0 5px 14px #353b5510;
+      cursor: pointer;
+      transition: transform 160ms ease, box-shadow 160ms ease;
+    }
+
+    .letter-card:hover, .letter-card:focus-visible {
+      transform: translateY(-4px) rotate(-2deg);
+      box-shadow: 0 10px 22px #353b5520;
+    }
+
+    .letter-card:focus-visible { outline: 3px solid #6577d8; outline-offset: 3px; }
+    .letter { color: #6577d8; font-size: 38px; font-weight: 800; line-height: 1; }
+    .number { color: #a4a7b4; font-size: 10px; letter-spacing: 1px; }
+    .letter-card:nth-child(4n + 2) .letter { color: #f17659; }
+    .letter-card:nth-child(4n + 3) .letter { color: #45a98b; }
+    .letter-card:nth-child(4n) .letter { color: #dfa638; }
+    .footer-note { margin-top: 30px; font-size: 14px; }
+
+    @media (max-width: 620px) {
+      body { padding: 40px 18px 28px; }
+      .alphabet { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+      .letter-card { min-height: 82px; border-radius: 16px; }
+    }
+
+    @media (max-width: 360px) {
+      .alphabet { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+  </style>
 </head>
 <body>
   <main>
